@@ -1,7 +1,14 @@
 ---
 title: R Review & Assessment
+output: learnr::tutorial
+runtime: shiny_prerendered
 time_slot: 60 minutes"
 ---
+
+
+```{r, include = FALSE}
+library(learnr)
+```
 
 ## Introduction
 
@@ -28,23 +35,21 @@ Answer the following 5 questions to the best of your knowledge and write down yo
 
 ### Question 1
 
-Which of the following expressions assigns the number 2 to the variable x?
-
-Choose one or more:
-
-- A. `x == 2`
-- B. `x <- 2`
-- C. `x - 2`
-- D. `x = 2`
-
-Your answer:
+read csv
 
 ### Question 2
 
 What does the following expression return?
 
-```{r}
-max(abs(c(-5, 1, 5)))
+`max(abs(c(-5, 1, 5)))`
+```{r q1, echo = FALSE}
+question("",
+         answer("-5"),
+         answer("1", correct = T),
+         answer("3", correct = T),
+         answer("An error"),
+         allow_retry = T)
+
 ```
 
 Choose one:
@@ -391,10 +396,13 @@ length(is.na(x))
 
 ### Question 24
 
-```{r, eval = FALSE}
+```{r ex25, eval = FALSE}
 x <- c(1, NA, 3)
 y <- c(NA, 2, NA)
-all(is.na(x + y))
+
+z <- data.frame(x,y)
+
+sum(is.na(z))
 ```
 
 - A. NA NA NA

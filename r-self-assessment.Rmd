@@ -8,6 +8,7 @@ time_slot: 60 minutes"
 
 ```{r, include = FALSE}
 library(learnr)
+knitr::opts_chunk$set(collapse = TRUE)
 ```
 
 ## Introduction
@@ -51,7 +52,7 @@ fruit    <-     "apple"
 
 ### R as a calculator: `+ - * / > >= %% %/%` etc
   
-```{r}
+```{r, collapse = TRUE}
 2+2
 2 * 3
 2 ^ 3
@@ -60,7 +61,7 @@ fruit    <-     "apple"
 
 Comparison:
 
-```{r}
+```{r, collapse = TRUE}
 2 == 1
 2 == 2
 3 > 2
@@ -84,7 +85,7 @@ x <- 2
 We're assigning 2 to a variable `x`.
 `x` is a variable but it is also a "numeric vector" of length 1.
 
-```{r}
+```{r, collapse = T}
 class(x)
 length(x)
 ```
@@ -101,7 +102,7 @@ x <- c(1, 2, 3) # Use the `c` function to put things together
 
 Notice we can also re-define a variable at a later point just like we did above.
 
-```{r}
+```{r, collapse = TRUE}
 class(x)
 length(x)
 ```
@@ -109,7 +110,7 @@ length(x)
 R can store much more than just numbers though.
 Let's start with strings of characters, which we've already seen:
 
-```{r}
+```{r, collapse = TRUE}
 fruit <- "apple"
 class(fruit)
 length(fruit)
@@ -201,8 +202,11 @@ mydata$type # Column named 'type'
 
 So what does that `order` function do?
 
-```{r}
+```{r, eval = FALSE}
 ?order # How to get help in R!
+```
+
+```{r}
 order(c(1, 2, 3))
 order(c(3, 2, 1))
 order(mydata$type)
@@ -274,7 +278,7 @@ Which line of code can be used to read in the `data.csv` file?
 question("",
          answer("read.csv('data.csv')", correct = T),
          answer("read('data.csv')"),
-         answer("read_csv('data.csv')", correct = T),
+         answer("tidyr::read_csv('data.csv')", correct = T),
          answer("data('data.csv')"),
          type = "learnr_radio"
          )

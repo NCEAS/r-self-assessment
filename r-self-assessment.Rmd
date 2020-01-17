@@ -687,8 +687,27 @@ question("",
 
 ```
 
+### Question 17
 
+Which package will the function 'select()' be called from when the packes are loaded in the following order:
 
+```{r, eval=FALSE}
+library(tidyverse)
+library(MASS)
+library(Select)
+library(dplyr)
+```
+
+```{r, q17, echo=FALSE}
+question("",
+         answer("tidyverse"),
+         answer("MASS"),
+         answer("Select"),
+         answer("dplyr", correct = T),
+         random_answer_order = TRUE
+         )
+
+```
   
     
     

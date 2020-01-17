@@ -161,6 +161,7 @@ mydata <- data.frame(site = c("A", "B", "C"),
                      temp = c(20, 30, 40))
 mydata
 ```
+_FYI: The "Tidyverse" suite of packages offers the `tibble()` as an alternative to a data.frame, which is often easier to look at in the console._
 
 Or we can read in a CSV from the file system and turn it into a `data.frame` in order to work with it in R:
 
@@ -168,6 +169,9 @@ Or we can read in a CSV from the file system and turn it into a `data.frame` in 
 mydata <- read.csv("data.csv")
 mydata
 ```
+
+_FYI: The tidyverse package `readr` offers the alternative `read_csv("data.csv")`, which is faster than `read.csv()` for large datasets_
+
 
 We can find out how many rows of data `mydata` has in it:
 
@@ -181,7 +185,7 @@ We can return just one of the columns:
 mydata$type
 unique(mydata$type)
 ```
-sort
+
 
 If we want to sort `mydata`, we use the `order` function (in kind of a weird way):
 
@@ -213,6 +217,9 @@ order(mydata$type)
 ```
 
 So `order(mydata$type)` is returning the rows of `mydata`, by row number, in sorted order.
+Finally, `mydata[order(mydata$type),]` is rearranging the rows of `mydata` by this order.
+
+_FYI: A tidyverse solution to this problem uses the `arrange()` function in the "dplyr" package via `arrange(my_data, type)`_
 
 We can also return just certain rows, based upon criteria:
 
@@ -234,6 +241,21 @@ Another handy way to subset `data.frame` is with the `subset` function:
 ```{r}
 subset(mydata, type == "fruit") # Equivalent to mydata[mydata$type == "fruit",]
 ```
+_FYI: A tidyverse solution to this problem uses the very similar `filter()` function in the "dplyr" package via `filter(mydata, type == "fruit")`. While not apparent in this example, the difference between the two functions is primarily in readability when adding more subsetting conditions, as `filter()` allows us to replace the `&` operator with additional arguments._
+
+
+We can also use the `subset` function to not only filter out certain rows, but also to filter out certain columns. This is done using the `select` argument in the function:
+
+```{r}
+# Pull out only the type column
+subset(mydata, select = "type")
+```
+_FYI: A tidyverse solution to this problem uses the `select()` function in the "dplyr" package via select(mydata, type). Again, the primary difference between the two approaches is in readability, especially when selecting multiple columns. (Also, no quotes are required around the variable name!)_
+
+
+
+
+
 
 There are a lot of useful functions to help us work with `data.frame`s:
 
@@ -241,6 +263,41 @@ There are a lot of useful functions to help us work with `data.frame`s:
 str(mydata)
 summary(mydata)
 ```
+
+
+#### Packages
+
+One of the advantages to using `R` is the large open source developer community. This comes in the form of "packages", which contain libraries of code for us to use. Packages from CRAN (the most popular collection of packages) can be easily installed via the `install.packages()` function. 
+
+For example, we can install the tidyverse package "dplyr" using the following command:
+```{r, eval = FALSE}
+install.packages("dplyr")
+```
+
+To tell `R` we are using a function from a particular package, we add the package name before the function. For example, to use the `tibble` function from `dplyr`, we can write:
+```{r}
+dplyr::tibble(x = c(1,2,3))
+```
+
+To avoid having to write the additional `<package name>::` everytime we want to use a function from a package, we can use the `library()` function.
+
+The code below tells `R` that everytime we write `tibble` (or any other `dplyr` function, like `group_by()` or `filter()`), that we are referrring to the function in the `dplyr` package
+```{r}
+library(dplyr)
+```
+
+This allows us to simplify the code above as:
+```{r}
+tibble(x = c(1,2,3))
+```
+
+_WARNING: The order that packages are loaded in matters! For instance, both the`dplyr` and `MASS` packages define a function called `select()`, which do very different things. If both are loaded in via the `library()` function, `R` will use the `select()` function from the more recent `library()` call, unless we specify using `<package_name>::`._
+
+
+
+
+
+
 
 ### More advanced topics to cover if time allows:
 

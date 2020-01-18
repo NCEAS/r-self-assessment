@@ -72,6 +72,8 @@ Comparison:
 ```
 
 
+
+
 ### Types of variables
 
 #### Vectors
@@ -140,6 +142,27 @@ Smushing character vectors together can be done with `paste`:
 ```{r}
 paste("key", "lime", "pie")
 ```
+
+A defining feature of `R` is its vectorized functions -- Many functions in `R` work on a vector element by element. For example, the code below adds the _vectors_ `x` and `y` by adding each component, so that the output is also a vector. 
+
+```{r, collapse = TRUE}
+x <- c(1,2,3)
+y <- c(4,5,6)
+
+x + y
+```
+
+Not all functions are vectorized, however, so we have to make sure to check which are and which aren't. For instance, the logical "AND" operator has two forms: `&` IS vectorized, but `&&` is not (it compares only the first element of each vector)
+```{r}
+# Returns a vector
+c(TRUE, FALSE) & c(TRUE, TRUE)
+
+# Returns a single value
+c(TRUE, FALSE) && c(TRUE, TRUE)
+```
+
+
+
 
 #### Lists
 
@@ -265,7 +288,7 @@ summary(mydata)
 ```
 
 
-#### Packages
+### Packages
 
 One of the advantages to using `R` is the large open source developer community. This comes in the form of "packages", which contain libraries of code for us to use. Packages from CRAN (the most popular collection of packages) can be easily installed via the `install.packages()` function. 
 
@@ -621,33 +644,6 @@ question("",
 
 ```
 
-
----- move this to learning section
-### Question 20
-
-```{r, eval = FALSE}
-rep(TRUE, 5) & rep(FALSE, 5)
-```
-
-- A. FALSE
-- B. TRUE
-- C. FALSE FALSE FALSE FALSE FALSE
-- D. TRUE TRUE TRUE TRUE TRUE
-- E. TRUE TRUE TRUE TRUE TRUE FALSE FALSE FALSE FALSE FALSE
-
-### Question 21
-
-```{r, eval = FALSE}
-rep(TRUE, 5) && rep(FALSE, 5)
-```
-
-- A. FALSE
-- B. TRUE
-- C. FALSE FALSE FALSE FALSE FALSE
-- D. TRUE TRUE TRUE TRUE TRUE
-- E. TRUE TRUE TRUE TRUE TRUE FALSE FALSE FALSE FALSE FALSE
-
---------------
 
 
 ### Question 15

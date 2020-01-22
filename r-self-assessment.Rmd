@@ -9,6 +9,7 @@ time_slot: 60 minutes"
 ```{r, include = FALSE}
 library(learnr)
 knitr::opts_chunk$set(collapse = TRUE)
+options(stringsAsFactors = FALSE)
 ```
 
 ## Introduction
@@ -71,7 +72,74 @@ Comparison:
 "pair" == "apple" # Order doesn't matter for ==
 ```
 
+### Controls Statements
 
+#### `if`, `else`
+
+Sometimes you want to be able to run some code only if some condition is satisfied. `if` statements allow us to do exactly that:
+
+```{r}
+# prints output when i is 2
+i <- 2
+if(i == 2){
+  print("i is 2")
+}
+
+# doens't print anything when i isn't 2
+i <- 3
+if(i == 2){
+  print("i is 2")
+}
+
+```
+
+Notice that nothing is printed when `i <- 3`. If we want to print a different output in this case, we can add an `else` statement:
+```{r}
+i <- 3
+if(i == 2){
+  print("i is 2")
+} else{
+  print("i is NOT 2")
+}
+```
+
+If we need more than 2 cases, we can add `else if` statements:
+```{r}
+i <- 3
+if(i == 2){
+  print("i is 2")
+} else if (i == 3){
+  print("i is not 2, but i is 3")
+} else{
+  print("i is not 2 or 3")
+}
+
+```
+
+#### `for`
+
+If we wanted to make sure our `if` statements above worked correctly, it would be nice if we could try easily try different values of `i` to cover all the cases (eg `i = 2`, `i = 3`, `i = 4`). `for` loops allow us to do exactly this! To get a sense of how it works, let's try printing the numbers 2, 3, and 4.
+
+```{r}
+for(i in c(2,3,4)){
+  print(i)
+}
+```
+
+Now, to test our code the `if` statement in the last section:
+```{r}
+for(i in c(2,3,4)){
+  
+  if(i == 2){
+    print("i is 2")
+  } else if (i == 3){
+    print("i is not 2, but i is 3")
+  } else{
+    print("i is not 2 or 3")
+  }
+  
+}
+```
 
 
 ### Types of variables
@@ -143,6 +211,36 @@ Smushing character vectors together can be done with `paste`:
 paste("key", "lime", "pie")
 ```
 
+Vectors always have to be one class -- we have just seen examples of numeric and character vectors. What happens when we try to mash them together? Instead of throwing an error, `R` will change force the elements to all be the same class. For instance, the numbers in the code below are forced to be characters:
+```{r}
+x <- c(1, 2, "three")
+
+class(x)
+```
+
+This tells us that the character class takes over the numeric class. In general, the coersion order is approximately logical < numeric < character < list.
+
+What if we don't like this order? In particular, what if we wanted to force `x` to be a numeric vector instead of a character vector? We can try doing this using the `as.numeric()` function. 
+```{r}
+x <- c(1, 2, "three")
+as.numeric(x)
+```
+
+The answer is that `R` will try its best to figure out what number "three" is referring to. In this case, `R` couldn't figure it out, so it changed "three" to `NA`. But now consider this example:
+```{r}
+y <- c(1, 2, "3")
+
+# y is a character vector
+class(y)
+
+# but we can turn it into a numeric vector without NAs
+as.numeric(y)
+```
+
+`R`'s output can change based on what we're using as the input, so we have to be careful to keep track of what our inputs and how `R` will handle them.
+
+
+
 A defining feature of `R` is its vectorized functions -- Many functions in `R` work on a vector element by element. For example, the code below adds the _vectors_ `x` and `y` by adding each component, so that the output is also a vector. 
 
 ```{r, collapse = TRUE}
@@ -166,12 +264,15 @@ c(TRUE, FALSE) && c(TRUE, TRUE)
 
 #### Lists
 
-Vectors and lists look similar in R sometimes but they have very different uses:
+Vectors and lists look similar in R sometimes but they have very different uses. Notice that while all elements of a vector must be the same class, elements of a list can be whatever class they want:
 
 ```{r}
 c(1, "apple", 3)
 list(1, "apple", 3)
 ```
+
+
+
 
 #### data.frames
 Most of the time when doing analysis in R you will be working with `data.frames`.
@@ -255,7 +356,7 @@ In this case, instead of indexing the rows by number, we're using TRUEs and FALS
 
 **Exercise:** Subset `mydata` to the vegetables instead of the fruit
 
-```{r}
+```{r, include = FALSE}
 # Your code here
 ```
 
@@ -276,14 +377,39 @@ subset(mydata, select = "type")
 _FYI: A tidyverse solution to this problem uses the `select()` function in the "dplyr" package via select(mydata, type). Again, the primary difference between the two approaches is in readability, especially when selecting multiple columns. (Also, no quotes are required around the variable name!)_
 
 
+If instead of filtering, we want to add more data to a `data.frame`, we can use the `rbind()` and `cbind()` functions, which allow us to add rows and columns, respectively.
+
+For instance, we can add "brussels sprouts" to `mydata` using `rbind()`
+```{r}
+rbind(mydata, c("vegetable", "brussels sprouts"))
+```
+
+In the same way, we can add a column to the dataframe using `cbind()`. This time, our new column will be the number of characters in the name column, using the `nchar()` function introduced earlier
+```{r}
+cbind(mydata, num_letters = nchar(mydata$name))
+```
+
+Notice that "brussels sprouts" didn't show up in this dataframe! These functions __do not__ change the original dataframe, `mydata`. Instead, they create a copy of `mydata` and then make the changes. To save your modifications, overwrite the `mydata` object like so:
+```{r}
+mydata <- rbind(mydata, c("vegetable", "brussels sprouts"))
+
+mydata
+```
 
 
+_FYI: A Tidyverse solution for adding the column `num_letters` could be found using the `mutate()` function in the `dplyr` package, via `mutate(mydata, num_letters = nchar(name))`_
 
 
-There are a lot of useful functions to help us work with `data.frame`s:
+There are a lot of useful functions to help us work with `data.frame`s. When seeing a new dataframe for the first time, it might be helpful to look at the structure of the data to get a quick idea of what you're working with
 
 ```{r}
+# the dimensions of the dataframe as (# rows, # columns)
+dim(mydata)
+
+# the structure of the dataframe
 str(mydata)
+
+# information about each column
 summary(mydata)
 ```
 
@@ -314,7 +440,7 @@ This allows us to simplify the code above as:
 tibble(x = c(1,2,3))
 ```
 
-_WARNING: The order that packages are loaded in matters! For instance, both the`dplyr` and `MASS` packages define a function called `select()`, which do very different things. If both are loaded in via the `library()` function, `R` will use the `select()` function from the more recent `library()` call, unless we specify using `<package_name>::`._
+_WARNING: The order that packages are loaded in matters! Notice that when we loaded `dplyr`, we got a message saying that `filter` and `lag` were masked from the `stats` package. This means that both `dplyr` and `stats` contain functions called `filter` and `lag`, and that whenever we type the command `filter()`, `R` will now use `dplyr`'s function instead of `stats`'. If both packages were loaded in via the `library()` function, `R` will use the function from the more recent `library()` call. If we want to use the `filter()` function from the `stats` package, we would now have to type `stats::filter()`_
 
 
 
@@ -686,7 +812,7 @@ question("",
 
 ### Question 17
 
-Which package will the function `select()` be called from when the packages are loaded in the following order:
+Suppose all of these packages contain a function called `select()`. Which package will the function `select()` be called from when the packages are loaded in the following order:
 
 ```{r, eval=FALSE}
 library(tidyverse)

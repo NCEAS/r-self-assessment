@@ -2,7 +2,7 @@
 title: R Review & Assessment
 output: learnr::tutorial
 runtime: shiny_prerendered
-time_slot: 60 minutes"
+time_slot: "60 minutes"
 ---
 
 
@@ -14,21 +14,24 @@ options(stringsAsFactors = FALSE)
 
 ## Introduction
 
-Let's take about an hour to take a quick assessment, touch up on basic R programming skills in a survey style, and then we'll move onto some challenges which should test your understanding if we have time.
+Let's take about 30-45min to take a quick self-assessment, touch up on some R programming skills in a survey style, and then we'll move onto some challenges which should test your understanding.
+
+Aknowledgement: This version of the assessment has been adapted from https://github.com/NCEAS/oss-lessons/tree/gh-pages/r-review-and-assessment by Nathan Hwangbo and Robert Saldivar, NCEAS.
+
 
 ## Learning Outcomes
 
-- Assess where everyone is with R so we can shape the curricula
-- Refresh general R programming skills
-- Test R skills against some example problems
+- Give everyone the opportunity to self-assess and refresh their R skills before the training
+- Prepare the training by reading some extra material on specific topics
+
 
 ## R overview
 
-Based on previous R training: https://github.nceas.ucsb.edu/Training/R-intro.
-Instructor will go over these live with the classroom, running 
+This assessment will go over:
 
 - Basic syntax
-  - Variables & assignemnt
+- Variables & assignemnt
+- Control flow (if, then, for loops)
   
 ### The assignment operator, `<-`
 
@@ -51,13 +54,16 @@ fruit<-"apple"
 fruit    <-     "apple"
 ```
 
+However the above synthax is the recommended one. See here for more information about Recommende R syntax: https://style.tidyverse.org/syntax.html
+
+
 ### R as a calculator: `+ - * / > >= %% %/%` etc
   
 ```{r, collapse = TRUE}
-2+2
+2 + 2
 2 * 3
 2 ^ 3
-5/2
+5 / 2
 ```
 
 Comparison:
@@ -71,76 +77,6 @@ Comparison:
 "apple" == "pair"
 "pair" == "apple" # Order doesn't matter for ==
 ```
-
-### Controls Statements
-
-#### `if`, `else`
-
-Sometimes you want to be able to run some code only if some condition is satisfied. `if` statements allow us to do exactly that:
-
-```{r}
-# prints output when i is 2
-i <- 2
-if(i == 2){
-  print("i is 2")
-}
-
-# doens't print anything when i isn't 2
-i <- 3
-if(i == 2){
-  print("i is 2")
-}
-
-```
-
-Notice that nothing is printed when `i <- 3`. If we want to print a different output in this case, we can add an `else` statement:
-```{r}
-i <- 3
-if(i == 2){
-  print("i is 2")
-} else{
-  print("i is NOT 2")
-}
-```
-
-If we need more than 2 cases, we can add `else if` statements:
-```{r}
-i <- 3
-if(i == 2){
-  print("i is 2")
-} else if (i == 3){
-  print("i is not 2, but i is 3")
-} else{
-  print("i is not 2 or 3")
-}
-
-```
-
-#### `for`
-
-If we wanted to make sure our `if` statements above worked correctly, it would be nice if we could try easily try different values of `i` to cover all the cases (eg `i = 2`, `i = 3`, `i = 4`). `for` loops allow us to do exactly this! To get a sense of how it works, let's try printing the numbers 2, 3, and 4.
-
-```{r}
-for(i in c(2,3,4)){
-  print(i)
-}
-```
-
-Now, to test our code the `if` statement in the last section:
-```{r}
-for(i in c(2,3,4)){
-  
-  if(i == 2){
-    print("i is 2")
-  } else if (i == 3){
-    print("i is not 2, but i is 3")
-  } else{
-    print("i is not 2 or 3")
-  }
-  
-}
-```
-
 
 ### Types of variables
 
@@ -414,6 +350,78 @@ summary(mydata)
 ```
 
 
+
+### Controls Statements
+
+#### `if`, `else`
+
+Sometimes you want to be able to run some code only if some condition is satisfied. `if` statements allow us to do exactly that:
+
+```{r}
+# prints output when i is 2
+i <- 2
+if(i == 2){
+  print("i is 2")
+}
+
+# doens't print anything when i isn't 2
+i <- 3
+if(i == 2){
+  print("i is 2")
+}
+
+```
+
+Notice that nothing is printed when `i <- 3`. If we want to print a different output in this case, we can add an `else` statement:
+```{r}
+i <- 3
+if(i == 2){
+  print("i is 2")
+} else{
+  print("i is NOT 2")
+}
+```
+
+If we need more than 2 cases, we can add `else if` statements:
+```{r}
+i <- 3
+if(i == 2){
+  print("i is 2")
+} else if (i == 3){
+  print("i is not 2, but i is 3")
+} else{
+  print("i is not 2 or 3")
+}
+
+```
+
+#### `for`
+
+If we wanted to make sure our `if` statements above worked correctly, it would be nice if we could try easily try different values of `i` to cover all the cases (eg `i = 2`, `i = 3`, `i = 4`). `for` loops allow us to do exactly this! To get a sense of how it works, let's try printing the numbers 2, 3, and 4.
+
+```{r}
+for(i in c(2,3,4)){
+  print(i)
+}
+```
+
+Now, to test our code the `if` statement in the last section:
+```{r}
+for(i in c(2,3,4)){
+  
+  if(i == 2){
+    print("i is 2")
+  } else if (i == 3){
+    print("i is not 2, but i is 3")
+  } else{
+    print("i is not 2 or 3")
+  }
+  
+}
+```
+
+
+
 ### Packages
 
 One of the advantages to using `R` is the large open source developer community. This comes in the form of "packages", which contain libraries of code for us to use. Packages from CRAN (the most popular collection of packages) can be easily installed via the `install.packages()` function. 
@@ -443,38 +451,16 @@ tibble(x = c(1,2,3))
 _WARNING: The order that packages are loaded in matters! Notice that when we loaded `dplyr`, we got a message saying that `filter` and `lag` were masked from the `stats` package. This means that both `dplyr` and `stats` contain functions called `filter` and `lag`, and that whenever we type the command `filter()`, `R` will now use `dplyr`'s function instead of `stats`'. If both packages were loaded in via the `library()` function, `R` will use the function from the more recent `library()` call. If we want to use the `filter()` function from the `stats` package, we would now have to type `stats::filter()`_
 
 
-
-
-
-
-
-### More advanced topics to cover if time allows:
-
-- Common util functions
-    - `table`
-- Iteration
-    - `for` loops
-        - When do we use for loops?
-    - `while` loops
-- Debugging
-  - traceback()
-  - browser()
-  - breakpoints in RStudio
-  
-
-
 ## Assessment
 
-Everyone will arrive to this lesson with different experiences with R.
-Skill with R doesn't necessarily exist a continuum and can instead be thought of as a set of tools.
-Each particpant may start the workshop with different tools.
+Everyone will arrive to this assessment with different experiences with R.
+Skill with R doesn't necessarily exist a continuum and can instead be thought of as a set of tools. Thus each particpant will start our workshop with different tools and we will all be able to learn from each others!
 
-In order to get a better sense of what topics in R we should focus more heavily on, let's do a quick assessment.
-The results will help us shape instruction so that we can ensure we're meeting everyone's needs.
 
 **Instructions:** 
 
-Answer the following 17 questions to the best of your knowledge and write down your answers.
+Answer the following 17 questions to the best of your knowledge and keep track of the topics you think will be good for you to further review. You will find at the end of this assessment a set of ressources to help you to do so.
+
 
 ### Question 1
 
@@ -505,7 +491,6 @@ question("",
          answer("5", correct = T),
          answer("An error")
          )
-
 ```
 
 
@@ -831,23 +816,20 @@ question("",
          )
 
 ```
-  
-    
-    
-    
-    
+ 
+
 
 ## Summary
 
 By the end of this lesson, you should have feel touched up on your general R skills and you also should have seen some of the trickier parts of R.
 Hopefully having seen the trickier parts of R will help later on down the road.
 
-## Resources
 
-Other good resources:
+## Resources
 
 - One of our lessons on R: https://github.nceas.ucsb.edu/Training/R-intro
 - Great, free book: http://r4ds.had.co.nz/
 - DataCamp's R intro, https://www.datacamp.com/courses/free-introduction-to-r
 Sources:
 - Used https://www.rstudio.com/resources/cheatsheets/ to make sure I wasn't missing any basic stuff
+

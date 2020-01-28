@@ -16,13 +16,16 @@ options(stringsAsFactors = FALSE)
 
 This refresh and self-assessment should take about 45-60 min of your time. We will start by touching up on some R programming skills in a survey style, and then we'll move onto some challenges which should let you self-assess your R skills. 
 
+
 ### Few notes:
 
 - It is not expeced that you know all the material in the overview section nor being able to answer all the questions. the goal is to trigger your curiosity and offer you the opportunity to do some self-learning before the training.
 - Our workshop will be focusing on the use of the [`Tidyverse`](https://www.tidyverse.org/) packages; so do not worry if you are not familiar with some of the more R base syntax. 
 
 
-Finally, this is not a test and your answers are not recorded. If you have questions or concerns about your assessment, please contact the person organizing your training.
+Finally, this is not a test and your answers are not recorded and you can try things as many times as you want. If you have questions or concerns about your assessment, please contact the person organizing your training.
+
+<br>
 
 <hr>
 

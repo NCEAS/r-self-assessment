@@ -14,16 +14,16 @@ options(stringsAsFactors = FALSE)
 
 ## Introduction
 
-This refresh and self-assessment should take about 45-60 min of your time. We will start by touching up on some R programming skills in a survey style, and then we'll move onto some challenges which should let you self-assess your R skills. 
+This refresh and self-assessment should take about 45-60 min of your time. We will start by touching up on some R programming skills, and then we'll move onto some challenges which should let you self-assess your R skills. 
 
 
 ### Few notes:
 
-- It is not expeced that you know all the material in the overview section nor being able to answer all the questions. the goal is to trigger your curiosity and offer you the opportunity to do some self-learning before the training.
-- Our workshop will be focusing on the use of the [`Tidyverse`](https://www.tidyverse.org/) packages; so do not worry if you are not familiar with some of the more R base syntax. 
+- It is not expected that you know all the material in the overview section nor being able to answer all the questions. the goal is to trigger your curiosity and offer you the opportunity to do some self-learning before the training.
+- Our workshop will be focusing on the use of the [`Tidyverse`](https://www.tidyverse.org/) packages which promote a specific way of handling data in R; thus do not worry if you are not familiar with some of the more R base syntax in this tutorial.
 
 
-Finally, this is not a test and your answers are not recorded and you can try things as many times as you want. If you have questions or concerns about your assessment, please contact the person organizing your training.
+Finally, this is not a test, your answers are not recorded and you can try things as many times as you want. If you have questions or concerns about your assessment, please contact the person organizing your training.
 
 <br>
 
@@ -34,18 +34,20 @@ Finally, this is not a test and your answers are not recorded and you can try th
 
 ## Learning Outcomes
 
-- Give everyone the opportunity to self-assess and refresh their R skills before the training
+- Give everyone the opportunity to self-assess and refresh their R skills at their own pace before the training
 - Prepare the training by reading some extra material on specific topics of interest
 
 
 ## R overview
 
-This assessment will go over:
+This overview will go over:
 
-- Basic syntax
+- Basic R syntax  
 - Variables & assignment
 - Control flow (if, then, for loops)
+- Some data manipulations with and without the tidyverse
   
+
 ### The assignment operator, `<-`
 
 One of the things we'll do all the time is save some value to a variable.
@@ -59,7 +61,7 @@ fruit
 Notice the last line with just `fruit` on it.
 Typing just the variable name in just prints the value to the Console.
 
-R has a flexible syntax.
+R has a flexible syntax (read blank spaces do not matter).
 The following two lines of code are identical to the above one.
 
 ```{r}
@@ -480,18 +482,37 @@ _WARNING: The order that packages are loaded in matters! Notice that when we loa
 Everyone will arrive to this assessment with different experiences with R.
 Skill with R doesn't necessarily exist a continuum and can instead be thought of as a set of tools. Thus each participant will start our workshop with different tools and we will all be able to learn from each others!
 
+There are no expectations that participants will know all this material. Our goal is to refresh some concepts and offer you the opportunity to research some of these topics before joining the meeting. Feel free to reach out with any questions!!
+
 
 **Instructions:** 
 
-Answer the following 17 questions to the best of your knowledge and keep track of the topics you think will be good for you to further review. You will find at the end of this assessment a set of resources to help you to do so.
+Answer the following 15 questions to the best of your knowledge and keep track of the topics you think will be good for you to further review. You will find at the end of this assessment a set of resources to help you to do so.
 
 
 ### Question 1
 
+```{r, eval = FALSE}
+x <- 2
+x ^ 2
+```
+
+```{r q1, echo = FALSE}
+question("",
+         answer("2"),
+         answer("4", correct= T),
+         answer("2 ^ 2"),
+         answer("x ^ 2")
+         )
+
+```
+
+### Question 2
+
 Which line of code can be used to read in the `data.csv` file?
 There are 2 correct answers, but only 1 is required:
 
-```{r q1, echo = FALSE}
+```{r q2, echo = FALSE}
 question("",
          answer("read.csv('data.csv')", correct = T),
          answer("read('data.csv')"),
@@ -503,12 +524,12 @@ question("",
 ```
 
 
-### Question 2
+### Question 3
 
 What does the following expression return?
 
 `max(abs(c(-5, 1, 5)))`
-```{r q2, echo = FALSE}
+```{r q3, echo = FALSE}
 question("",
          answer("-5"),
          answer("1"),
@@ -518,7 +539,7 @@ question("",
 ```
 
 
-### Question 3
+### Question 4
 
 If x and y are both data.frames defined by:
 
@@ -539,7 +560,7 @@ z
 
 (i.e. one column with the numbers 1, 2, and 3 in it)
 
-```{r q3, echo = FALSE}
+```{r q4, echo = FALSE}
 question("",
          answer("join(x,y)"),
          answer("c(x,y)"),
@@ -550,7 +571,7 @@ question("",
 ```
 
 
-### Question 4
+### Question 5
   
 What is the output of the following code chunk?
 
@@ -559,7 +580,7 @@ x <- data.frame(x = 1:10, y = 1:10)
 dim(x)
 ```
 
-```{r q4, echo = FALSE}
+```{r q5, echo = FALSE}
 question("",
          answer("2"),
          answer("10"),
@@ -570,7 +591,7 @@ question("",
 ```
 
 
-### Question 5
+### Question 6
 
 What is the output of the following code chunk?
 
@@ -581,7 +602,7 @@ z <- cbind(x, y)
 nrow(z)
 ```
 
-```{r q5, echo = FALSE}
+```{r q6, echo = FALSE}
 question("",
          answer("3"),
          answer("7"),
@@ -592,48 +613,9 @@ question("",
 ```
 
 
-  
-Use the following data frame for the next two questions:
-
-`x <- data.frame(w = -9:0, y = 1:10, z = 11:20)`
-
-### Question 6
-
-Which expression(s) return a `data.frame` with rows where y is greater than 5 (i.e. 6 - 10)
-
-There are 2 correct answers, but only 1 is required:
-
-```{r q6, echo = FALSE}
-question("",
-         answer("x$y > 5"),
-         answer("subset(x, y > 5)", correct = T),
-         answer("x[y > 5,]"),
-         answer("dplyr::filter(x, y > 5)", correct = T),
-         type = "learnr_radio"
-         )
-
-```
-
 
 ### Question 7
 
-Which expression(s) return a `data.frame` where only the columns `w` and `z` are retained?
-There are 2 correct answers, but only 1 is required:
-
-```{r q7, echo = FALSE}
-question("",
-         answer("x[,c(w,z)]"),
-         answer("subset(x, c('w','z'))"),
-         answer("subset(x, select = c('w', 'z')", correct = T),
-         answer("dplyr::select(x, w,z)", correct = T),
-         type = "learnr_radio"
-         )
-
-```
-
-
-
-### Question 8
 Use the following data.frame `iris` to answer the next question.
 
 ```{r, echo = FALSE}
@@ -641,16 +623,42 @@ head(iris)
 ```
 
 
-Which expression return a `data.frame` with rows where Species is "setosa" and only the columns `Sepal.Length` and `Species`?
+Which expression return a `data.frame` with only the columns `Sepal.Length` and `Species`?
+
+There are 2 correct answers, but only 1 is required:
+
+```{r q7, echo = FALSE}
+question("",
+         answer('dplyr::select(iris, Sepal.Length, Species)', correct = T),
+         answer('iris[, c("Sepal.Length", "Species")]',correct = T),
+         answer('iris[c("Sepal.Length", "Species"),]'),
+         answer('iris[Species == "setosa", c("Sepal.Length", "Species"))'),
+         type = "learnr_radio"
+         )
+
+
+```
+
+
+### Question 8
+
+Still using the same data.frame `iris` to answer the next question.
+
+```{r, echo = FALSE}
+head(iris)
+```
+
+
+Which expression return a `data.frame` with rows where Species is "setosa" ?
 
 There are 2 correct answers, but only 1 is required:
 
 ```{r q8, echo = FALSE}
 question("",
-         answer('dplyr::select(dplyr::filter(iris, Species == "setosa"), Sepal.Length, Species)', correct = T),
-         answer('iris["setosa", c("Sepal.Length", "Species")]'),
-         answer('iris[Species == "setosa" & c("Sepal.Length", "Species"),]'),
-         answer('subset(iris, Species == "setosa", c("Sepal.Length", "Species"))', correct = T),
+         answer('dplyr::filter(iris, Species == "setosa")', correct = T),
+         answer('iris["setosa", ]'),
+         answer('iris[, Species == "setosa"]'),
+         answer('iris[Species == "setosa", ]', correct = T),
          type = "learnr_radio"
          )
 
@@ -660,33 +668,16 @@ question("",
 
 For the questions below, unless otherwise specified, select the output of the following code chunks.
 
+
 ### Question 9
-
-```{r, eval = FALSE}
-x <- 2
-x ^ 2
-```
-
-```{r q9, echo = FALSE}
-question("",
-         answer("2"),
-         answer("4", correct= T),
-         answer("2 ^ 2"),
-         answer("x ^ 2")
-         )
-
-```
-
-
-### Question 10
 
 ```{r, eval = FALSE}
 x <- "hello"
 y <- "world"
-paste(x, y)
+paste(x, y, sep = " ")
 ```
 
-```{r q10, echo = FALSE}
+```{r q9, echo = FALSE}
 question("",
          answer('"hello world"', correct = T),
          answer('"hello" "world"'),
@@ -697,30 +688,30 @@ question("",
 ```
 
 
-### Question 11
+### Question 10
 
 ```{r, eval = FALSE}
 x <- NA
 
 if (is.na(x)) {
-  print("foo")
+  print("conservation")
 } else {
-  print("bar")
+  print("nature")
 }
 ```
 
-```{r q11, echo = FALSE}
+```{r q10, echo = FALSE}
 question("",
-         answer('"foo"', correct = T),
-         answer('"bar"'),
+         answer('"conservation"', correct = T),
+         answer('"nature"'),
          answer('NA'),
-         answer('"foobar"')
+         answer('"conservationnature"')
          )
 
 ```
 
 
-### Question 12
+### Question 11
 
 What will the following code print?
 
@@ -733,7 +724,7 @@ for (number in numbers) {
 print(count)
 ```
 
-```{r q12, echo = FALSE}
+```{r q11, echo = FALSE}
 question("",
          answer("0"),
          answer("3"),
@@ -744,15 +735,14 @@ question("",
 ```
 
 
-
-### Question 13
+### Question 12
 
 ```{r, eval = FALSE}
 x <- c(1, "2", 3)
 class(x)
 ```
 
-```{r q13, echo = FALSE}
+```{r q12, echo = FALSE}
 question("",
          answer("numeric"),
          answer("character", correct = T),
@@ -763,14 +753,14 @@ question("",
 ```
 
 
-### Question 14
+### Question 13
 
 ```{r, eval = FALSE}
 x <- c(1, "A", 3)
 as.numeric(x)
 ```
 
-```{r q14, echo = FALSE}
+```{r q13, echo = FALSE}
 question("",
          answer("NA NA NA"),
          answer("1 A 3"),
@@ -782,14 +772,14 @@ question("",
 
 
 
-### Question 15
+### Question 14
 
 ```{r, eval = FALSE}
 x <- c(1, 2, NA, 4, NA)
 sum(is.na(x))
 ```
 
-```{r q15, echo = FALSE}
+```{r q14, echo = FALSE}
 question("",
          answer("1"),
          answer("2", correct = T),
@@ -798,28 +788,9 @@ question("",
          )
 ```
 
-### Question 16
 
-```{r, eval = FALSE}
-x <- c(1, NA, 3)
-y <- c(NA, 2, NA)
 
-z <- data.frame(x,y)
-
-colSums(is.na(z))
-```
-
-```{r q16, echo = FALSE}
-question("",
-         answer("NA NA"),
-         answer("1 2", correct = T),
-         answer("1 1 1"),
-         answer("3")
-         )
-
-```
-
-### Question 17
+### Question 15
 
 Suppose all of these packages contain a function called `select()`. Which package will the function `select()` be called from when the packages are loaded in the following order:
 
@@ -830,7 +801,7 @@ library(Select)
 library(dplyr)
 ```
 
-```{r, q17, echo=FALSE}
+```{r, q15, echo=FALSE}
 question("",
          answer("tidyverse"),
          answer("MASS"),
@@ -845,15 +816,23 @@ question("",
 
 ## Summary
 
-By the end of this lesson, you should have feel touched up on your general R skills and you also should have seen some of the trickier parts of R.
-Hopefully having seen the trickier parts of R will help later on down the road.
+By the end of this self-assessment, you should have feel touched up on your general R skills and you also should have seen some of the trickier parts of R. Hopefully having seen the trickier parts of R will help later on down the road and pick your curiosity to learn more using the resources on the next page.
+
+Again feel free to reach out with any questions!!
 
 
 ## Resources
 
-- One of our lessons on R: https://github.nceas.ucsb.edu/Training/R-intro
-- Great, free book: http://r4ds.had.co.nz/
-- DataCamp's R intro, https://www.datacamp.com/courses/free-introduction-to-r
-Sources:
-- Used https://www.rstudio.com/resources/cheatsheets/ to make sure I wasn't missing any basic stuff
+- RStudio Education: <https://education.rstudio.com/learn/beginner/>; Good starting point
+- QCBS Introduction to R lesson: <https://wiki.qcbs.ca/r>
+- An Introduction to R <https://cran.r-project.org/doc/manuals/r-r>
+- STAT 545, Jenny Bryan: <http://stat545.com/index.html>
+- Great, free book about using R for data science: <http://r4ds.had.co.nz/>
+- Used https://www.rstudio.com/resources/cheatsheets/ to make sure I wasn't missing any basic stuff (also available from RStudio: RStudio Cheat Sheets: From RStudio IDE: Help > Cheat sheets > a cheat sheet)
+- RStudio shortcuts: <https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts>
+- Advanced R: <https://adv-r.hadley.nz/> ; chapters 2-4
+- Cleaning data with R: <https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf>
+- R for Reproducible Scientific Analysis: <http://swcarpentry.github.io/r-novice-gapminder/>
+
+
 

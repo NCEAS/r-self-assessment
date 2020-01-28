@@ -14,15 +14,25 @@ options(stringsAsFactors = FALSE)
 
 ## Introduction
 
-Let's take about 30-45min to take a quick self-assessment, touch up on some R programming skills in a survey style, and then we'll move onto some challenges which should test your understanding.
+This refresh and self-assessment should take about 45-60 min of your time. We will start by touching up on some R programming skills in a survey style, and then we'll move onto some challenges which should let you self-assess your R skills. 
 
-Aknowledgement: This version of the assessment has been adapted from https://github.com/NCEAS/oss-lessons/tree/gh-pages/r-review-and-assessment by Nathan Hwangbo and Robert Saldivar, NCEAS.
+### Few notes:
+
+- It is not expeced that you know all the material in the overview section nor being able to answer all the questions. the goal is to trigger your curiosity and offer you the opportunity to do some self-learning before the training.
+- Our workshop will be focusing on the use of the [`Tidyverse`](https://www.tidyverse.org/) packages; so do not worry if you are not familiar with some of the more R base syntax. 
+
+
+Finally, this is not a test and your answers are not recorded. If you have questions or concerns about your assessment, please contact the person organizing your training.
+
+<hr>
+
+*Acknowledgement: This version of the assessment has been adapted from Bryce Mecum's version of [OSS 2017 self-assessment](https://github.com/NCEAS/oss-lessons/tree/gh-pages/r-review-and-assessment) by Nathan Hwangbo, Robert Saldivar, Jeanette Clark and Julien Brun, NCEAS.*
 
 
 ## Learning Outcomes
 
 - Give everyone the opportunity to self-assess and refresh their R skills before the training
-- Prepare the training by reading some extra material on specific topics
+- Prepare the training by reading some extra material on specific topics of interest
 
 
 ## R overview
@@ -30,7 +40,7 @@ Aknowledgement: This version of the assessment has been adapted from https://git
 This assessment will go over:
 
 - Basic syntax
-- Variables & assignemnt
+- Variables & assignment
 - Control flow (if, then, for loops)
   
 ### The assignment operator, `<-`
@@ -54,7 +64,7 @@ fruit<-"apple"
 fruit    <-     "apple"
 ```
 
-However the above synthax is the recommended one. See here for more information about Recommende R syntax: https://style.tidyverse.org/syntax.html
+However the syntax `fruit <- "apple"`  is the recommended one. **See here for more information about Recommended R syntax: https://style.tidyverse.org/syntax.html**
 
 
 ### R as a calculator: `+ - * / > >= %% %/%` etc
@@ -147,22 +157,25 @@ Smushing character vectors together can be done with `paste`:
 paste("key", "lime", "pie")
 ```
 
-Vectors always have to be one class -- we have just seen examples of numeric and character vectors. What happens when we try to mash them together? Instead of throwing an error, `R` will change force the elements to all be the same class. For instance, the numbers in the code below are forced to be characters:
+Vectors always have to be one class -- we have just seen examples of numeric and character vectors. What happens when we try to mash them together? Instead of throwing an error, `R` will first try to change force (called coercion) the elements to all be the same class. For instance, the numbers in the code below are forced to be characters:
+
 ```{r}
 x <- c(1, 2, "three")
 
 class(x)
 ```
 
-This tells us that the character class takes over the numeric class. In general, the coersion order is approximately logical < numeric < character < list.
+This tells us that the character class takes over the numeric class. In general, the coercion order is approximately logical < numeric < character.
 
 What if we don't like this order? In particular, what if we wanted to force `x` to be a numeric vector instead of a character vector? We can try doing this using the `as.numeric()` function. 
+
 ```{r}
 x <- c(1, 2, "three")
 as.numeric(x)
 ```
 
 The answer is that `R` will try its best to figure out what number "three" is referring to. In this case, `R` couldn't figure it out, so it changed "three" to `NA`. But now consider this example:
+
 ```{r}
 y <- c(1, 2, "3")
 
@@ -176,7 +189,6 @@ as.numeric(y)
 `R`'s output can change based on what we're using as the input, so we have to be careful to keep track of what our inputs and how `R` will handle them.
 
 
-
 A defining feature of `R` is its vectorized functions -- Many functions in `R` work on a vector element by element. For example, the code below adds the _vectors_ `x` and `y` by adding each component, so that the output is also a vector. 
 
 ```{r, collapse = TRUE}
@@ -186,7 +198,8 @@ y <- c(4,5,6)
 x + y
 ```
 
-Not all functions are vectorized, however, so we have to make sure to check which are and which aren't. For instance, the logical "AND" operator has two forms: `&` IS vectorized, but `&&` is not (it compares only the first element of each vector)
+Not all functions are vectorized, however, so we have to make sure to check which are and which aren't. For instance, the logical "AND" operator has two forms: `&` IS vectorized, but `&&` is not (it compares only the first element of each vector).
+
 ```{r}
 # Returns a vector
 c(TRUE, FALSE) & c(TRUE, TRUE)
@@ -194,8 +207,6 @@ c(TRUE, FALSE) & c(TRUE, TRUE)
 # Returns a single value
 c(TRUE, FALSE) && c(TRUE, TRUE)
 ```
-
-
 
 
 #### Lists
@@ -208,11 +219,10 @@ list(1, "apple", 3)
 ```
 
 
-
-
 #### data.frames
+
 Most of the time when doing analysis in R you will be working with `data.frames`.
-`data.frames` are tabular, with column headings and rows of data, just like a CSV file.
+`data.frames` are used to store tabular data, with column headings and rows of data, just like a CSV file.
 
 We create new `data.frames` with a relevantly-named function:
 
@@ -221,7 +231,8 @@ mydata <- data.frame(site = c("A", "B", "C"),
                      temp = c(20, 30, 40))
 mydata
 ```
-_FYI: The "Tidyverse" suite of packages offers the `tibble()` as an alternative to a data.frame, which is often easier to look at in the console._
+
+_FYI: The "tidyverse" suite of packages offers the `tibble()` as an alternative to a data.frame, which is often easier to look at in the console._
 
 Or we can read in a CSV from the file system and turn it into a `data.frame` in order to work with it in R:
 
@@ -254,14 +265,15 @@ mydata[order(mydata$type),]
 ```
 
 Let's break the above command down a bit.
-We can access the individual cells of a `data.frame` with a new syntax element: `[` and `[`:
+We can access the individual cells of a `data.frame` with a new syntax element: `[` and `]`:
 
 ```{r}
 mydata[1,] # First row
 mydata[,1] # First column
 mydata[1,1] # First row, first column
-mydata[c(1,5),] # First and second row
-mydata$type # Column named 'type'
+mydata[c(1,5),] # First and fifth row
+mydata[,"type"] # Column named 'type'
+mydata$type # we can also use '$' to achieve a similar result in a more compact synthax
 ```
 
 So what does that `order` function do?
@@ -279,7 +291,14 @@ order(mydata$type)
 So `order(mydata$type)` is returning the rows of `mydata`, by row number, in sorted order.
 Finally, `mydata[order(mydata$type),]` is rearranging the rows of `mydata` by this order.
 
-_FYI: A tidyverse solution to this problem uses the `arrange()` function in the "dplyr" package via `arrange(my_data, type)`_
+FYI: A [`Tidyverse`](https://www.tidyverse.org/), which is a set of very handy R packages to perform data manipulations, solution to this problem uses the `arrange()` function in the `dplyr` package via `arrange(mydata, type)`
+
+```{r}
+mydata[order(mydata$type),]  # using the base R syntax
+
+library(dplyr)
+arrange(mydata, type)  # using the tidyverse syntax
+```
 
 We can also return just certain rows, based upon criteria:
 
@@ -288,29 +307,24 @@ mydata[mydata$type == "fruit",]
 mydata$type == "fruit"
 ```
 
-In this case, instead of indexing the rows by number, we're using TRUEs and FALSEs.
+Similarly, we could use again the `Tidyverse` to perform such operation using the `filter()` function from the `dplyr` package:
+```{r}
+library(dplyr) # note necessary because we already attached this package previously
+filter(mydata, type == "fruit")
+```
 
-**Exercise:** Subset `mydata` to the vegetables instead of the fruit
+In this case, instead of indexing the rows by number, we're using TRUEs and FALSEs results of the condition type is equal (note the `==`) to `fruit`.
+
+**Exercise:** Using the `tidyverse` syntax, subset `mydata` to the vegetables instead of the fruit
 
 ```{r, include = FALSE}
 # Your code here
 ```
 
-Another handy way to subset `data.frame` is with the `subset` function:
-    
-```{r}
-subset(mydata, type == "fruit") # Equivalent to mydata[mydata$type == "fruit",]
-```
-_FYI: A tidyverse solution to this problem uses the very similar `filter()` function in the "dplyr" package via `filter(mydata, type == "fruit")`. While not apparent in this example, the difference between the two functions is primarily in readability when adding more subsetting conditions, as `filter()` allows us to replace the `&` operator with additional arguments._
-
 
 We can also use the `subset` function to not only filter out certain rows, but also to filter out certain columns. This is done using the `select` argument in the function:
 
-```{r}
-# Pull out only the type column
-subset(mydata, select = "type")
-```
-_FYI: A tidyverse solution to this problem uses the `select()` function in the "dplyr" package via select(mydata, type). Again, the primary difference between the two approaches is in readability, especially when selecting multiple columns. (Also, no quotes are required around the variable name!)_
+_FYI: A tidyverse solution to this problem uses the `select()` function in the "dplyr" package via select(mydata, type). Again, the primary difference between the two approaches is in readability, especially when selecting multiple columns. (Also, )_
 
 
 If instead of filtering, we want to add more data to a `data.frame`, we can use the `rbind()` and `cbind()` functions, which allow us to add rows and columns, respectively.
@@ -320,12 +334,21 @@ For instance, we can add "brussels sprouts" to `mydata` using `rbind()`
 rbind(mydata, c("vegetable", "brussels sprouts"))
 ```
 
-In the same way, we can add a column to the dataframe using `cbind()`. This time, our new column will be the number of characters in the name column, using the `nchar()` function introduced earlier
+
+
+In the same way, we can add a column to the data frame using `cbind()`. This time, our new column will be the number of characters in the name column, using the `nchar()` function introduced earlier
 ```{r}
 cbind(mydata, num_letters = nchar(mydata$name))
 ```
 
-Notice that "brussels sprouts" didn't show up in this dataframe! These functions __do not__ change the original dataframe, `mydata`. Instead, they create a copy of `mydata` and then make the changes. To save your modifications, overwrite the `mydata` object like so:
+_FYI: A Tidyverse solution for adding the column `num_letters` could be found using the `mutate()` function in the `dplyr` package, via `mutate(mydata, num_letters = nchar(name))`_
+```{r}
+mutate(mydata, num_letters = nchar(name))
+```
+
+
+Notice that "brussels sprouts" didn't show up in this data frame! These functions __do not__ change the original data frame, `mydata`. Instead, they create a copy of `mydata` and then make the changes. To save your modifications, overwrite the `mydata` object like so:
+
 ```{r}
 mydata <- rbind(mydata, c("vegetable", "brussels sprouts"))
 
@@ -333,10 +356,8 @@ mydata
 ```
 
 
-_FYI: A Tidyverse solution for adding the column `num_letters` could be found using the `mutate()` function in the `dplyr` package, via `mutate(mydata, num_letters = nchar(name))`_
 
-
-There are a lot of useful functions to help us work with `data.frame`s. When seeing a new dataframe for the first time, it might be helpful to look at the structure of the data to get a quick idea of what you're working with
+There are a lot of useful functions to help us work with `data.frame`s. When seeing a new data frame for the first time, it might be helpful to look at the structure of the data to get a quick idea of what you're working with
 
 ```{r}
 # the dimensions of the dataframe as (# rows, # columns)
@@ -397,7 +418,7 @@ if(i == 2){
 
 #### `for`
 
-If we wanted to make sure our `if` statements above worked correctly, it would be nice if we could try easily try different values of `i` to cover all the cases (eg `i = 2`, `i = 3`, `i = 4`). `for` loops allow us to do exactly this! To get a sense of how it works, let's try printing the numbers 2, 3, and 4.
+If we wanted to make sure our `if` statements above worked correctly, it would be nice if we could easily try different values of `i` to cover all the cases (e.g. `i = 2`, `i = 3`, `i = 4`). `for` loops allow us to do exactly this! To get a sense of how it works, let's try printing the numbers 2, 3, and 4.
 
 ```{r}
 for(i in c(2,3,4)){
@@ -436,9 +457,9 @@ To tell `R` we are using a function from a particular package, we add the packag
 dplyr::tibble(x = c(1,2,3))
 ```
 
-To avoid having to write the additional `<package name>::` everytime we want to use a function from a package, we can use the `library()` function.
+To avoid having to write the additional `<package name>::` every time we want to use a function from a package, we can use the `library()` function.
 
-The code below tells `R` that everytime we write `tibble` (or any other `dplyr` function, like `group_by()` or `filter()`), that we are referrring to the function in the `dplyr` package
+The code below tells `R` that every time we write `tibble` (or any other `dplyr` function, like `group_by()` or `filter()`), that we are referring to the function in the `dplyr` package
 ```{r}
 library(dplyr)
 ```
@@ -454,12 +475,12 @@ _WARNING: The order that packages are loaded in matters! Notice that when we loa
 ## Assessment
 
 Everyone will arrive to this assessment with different experiences with R.
-Skill with R doesn't necessarily exist a continuum and can instead be thought of as a set of tools. Thus each particpant will start our workshop with different tools and we will all be able to learn from each others!
+Skill with R doesn't necessarily exist a continuum and can instead be thought of as a set of tools. Thus each participant will start our workshop with different tools and we will all be able to learn from each others!
 
 
 **Instructions:** 
 
-Answer the following 17 questions to the best of your knowledge and keep track of the topics you think will be good for you to further review. You will find at the end of this assessment a set of ressources to help you to do so.
+Answer the following 17 questions to the best of your knowledge and keep track of the topics you think will be good for you to further review. You will find at the end of this assessment a set of resources to help you to do so.
 
 
 ### Question 1
@@ -593,7 +614,7 @@ question("",
 
 ### Question 7
 
-Which expresssion(s) return a `data.frame` where ony the columns `w` and `z` are retained?
+Which expression(s) return a `data.frame` where only the columns `w` and `z` are retained?
 There are 2 correct answers, but only 1 is required:
 
 ```{r q7, echo = FALSE}

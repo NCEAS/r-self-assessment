@@ -824,11 +824,11 @@ Again feel free to reach out with any questions!!
 ## Resources
 
 - RStudio Education: <https://education.rstudio.com/learn/beginner/>; Good starting point
-- QCBS Introduction to R lesson: <https://wiki.qcbs.ca/r>
-- An Introduction to R <https://cran.r-project.org/doc/manuals/r-r>
-- STAT 545, Jenny Bryan: <http://stat545.com/index.html>
 - Great, free book about using R for data science: <http://r4ds.had.co.nz/>
-- Used https://www.rstudio.com/resources/cheatsheets/ to make sure I wasn't missing any basic stuff (also available from RStudio: RStudio Cheat Sheets: From RStudio IDE: Help > Cheat sheets > a cheat sheet)
+- QCBS Introduction to R lesson: <https://wiki.qcbs.ca/r>
+- STAT 545, Jenny Bryan: <http://stat545.com/index.html>
+- An Introduction to R <https://cran.r-project.org/doc/manuals/R-intro.html>
+- Used https://www.rstudio.com/resources/cheatsheets/ tgreat overview of core packages of the tidyverse (also available from RStudio: RStudio Cheat Sheets: From RStudio IDE: Help > Cheat sheets > a cheat sheet)
 - RStudio shortcuts: <https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts>
 - Advanced R: <https://adv-r.hadley.nz/> ; chapters 2-4
 - Cleaning data with R: <https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf>
